@@ -5,5 +5,9 @@ Recommender systems in recruitment platforms involve two active sides, candidate
 # Requirements
 python 3.8
 
+```
+conda env create -f environment.yml
+conda activate fairness_env
+```
 # Run
 
