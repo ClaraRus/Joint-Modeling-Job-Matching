@@ -38,12 +38,14 @@ python run_two_sided_fusion.py --fusion_type fair_fusion_optim --core "20" --set
 - settings_DGI_country_is_payed (```optimization_obj = w * DGI(country) + (1-w) * DGI(is_payed)```)
 
 You can define your own settings in ```run_two_sided_fusion.py``` as it follows:
+```
 settings_<metric>_<attribute> = [
     {
          "fair_metrics":["metric"],  # list of fairness metrics used during optimization
          "group_cols": ["attribute"] # list of attributes used during optimization 
     }
 ]
+```
 Next define your setting in ```settings_choices``` dict:
 ```
 settings_choices = {
