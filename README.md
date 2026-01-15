@@ -64,31 +64,36 @@ settings_choices = {
 ### Example - Use Case
 
 
-Below you can see an example of how the JOB recommendation list chnages due TSF - SUM (alpha = 0.7) for U_ID = 596135 in top-10, which preference towards NON-DE jobs is 0.2:
+Below you can see an example of how the JOB recommendation list chnages due TSF - SUM (alpha = 0.7) for U_ID = 715804 in top-10, which preference towards NON-DE jobs is 0.5:
 ##### BPR
-2251808
-1244790
-1623767
-447115
-1303059
-721917
-783762 - DE (removed)
-1728106
-1918159
-74639 - DE (added)
-
+```
+2225861 -- NON-DE
+1169080 -- DE
+1416610 -- DE
+1306469 -- DE
+86578 -- DE (removed)
+869007 -- DE
+824200 -- DE (removed)
+1821386 -- DE (removed)
+160781 -- DE (removed)
+1630349 -- DE
+```
+Proportion of NON-DE job: 0.1.
 
 ##### TSF - SUM
-1728106
-447115
-2251808
-1918159
-1056604 - NON-DE (added)
-1623767
-1244790 - DE (added)
-1303059
-721917
-1731132
+```
+2225861 -- NON-DE
+1416610 -- DE
+2280530 -- NON-DE
+1306469 -- DE
+1564428 -- NON-DE (added)
+1630349 -- DE
+1642014 -- NON-DE (added)
+1553375 -- NON-DE (added)
+1169080 -- DE
+869007 -- DE
+```
+Proportion of NON-DE job: 0.5.
 
-TSF - SUM adds one more NON-DE job, respecting more the user preference and increasing the fairness as it increses the number of NON-DE jobs which are overall underrepresented.
+TSF - SUM adds one more NON-DE job, respecting more the user preference towards NON-DE jobs and increasing the fairness as it increses the number of NON-DE jobs which are overall underrepresented.
 
