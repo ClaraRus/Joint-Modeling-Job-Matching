@@ -64,7 +64,7 @@ settings_choices = {
 ### Example - Use Case
 
 
-Below you can see an example of how the JOB recommendation list chnages due TSF - SUM (alpha = 0.7) for U_ID = 715804 in top-10, which preference towards NON-DE jobs is 0.5:
+Below you can see an example of how the job recommendation list changes due TSF - SUM (alpha = 0.7) for U_ID = 715804 in top-10, which preference towards NON-DE jobs is 0.5:
 ##### BPR
 ```
 2225861 -- NON-DE
