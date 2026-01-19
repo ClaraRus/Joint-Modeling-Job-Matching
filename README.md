@@ -104,6 +104,15 @@ Proportion of NON-DE job: 0.5.
 
 TSF - SUM adds one more NON-DE job, respecting more the user preference towards NON-DE jobs and increasing the fairness as it increses the number of NON-DE jobs which are overall underrepresented.
 
+### Example - Dual Optimization
+
+#### Dual Optimization RGI(country,premium)
+![Overview](external_info/2sided_fair_optim_(dual_DGI)_alpha_vs_base_metric_K10.png)
+The dual optimization obtains a good trade-off between RGI(country) and RGI(premium). It is to be noted that the alpha value for this represents actually the weight (w) between the two metrics as specified above.
+#### Dual Optimization RGI-RUP(country)
+![Overview](external_info/2sided_fair_optim_(DGI-DUP)_alpha_vs_base_metric_K10.png)
+The dual optimization between RGI(country) and RUP(country) shows that these metrics show indeed a trade-off as obtaining an optimal results for both metrics is rather difficult.
+
 # References
 [1] Sonboli, N., Mansoury, M., Guo, Z., Kadekodi, S., Liu, W., Liu, Z., ... & Burke, R. (2021, October). Librec-auto: A tool for recommender systems experimentation. In Proceedings of the 30th ACM International Conference on Information & Knowledge Management (pp. 4584-4593).
 
