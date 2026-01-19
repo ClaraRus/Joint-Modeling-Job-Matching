@@ -18,6 +18,13 @@ conda activate fairness_env
 
 You can find the run scripts under ```/src/TSF/run_TSF.sh```.
 
+
+Experiments with recommendation model were done by Librec-auto [1].
+
+TSF-ATT method made use of the implementation provided by [2].
+
+This repo will be updated with the full pipeline and the implementation for TSF-ATT.
+
 ### Running TSF
 ```
 python run_two_sided_fusion.py --fusion_type <fusion_type> --core "20"
@@ -96,4 +103,8 @@ Proportion of NON-DE job: 0.1.
 Proportion of NON-DE job: 0.5.
 
 TSF - SUM adds one more NON-DE job, respecting more the user preference towards NON-DE jobs and increasing the fairness as it increses the number of NON-DE jobs which are overall underrepresented.
+
+[1] Sonboli, N., Mansoury, M., Guo, Z., Kadekodi, S., Liu, W., Liu, Z., ... & Burke, R. (2021, October). Librec-auto: A tool for recommender systems experimentation. In Proceedings of the 30th ACM International Conference on Information & Knowledge Management (pp. 4584-4593).
+
+[2] Sabouri, M., Mansoury, M., Lin, K., & Mobasher, B. (2025). Using LLMs to Capture Users' Temporal Context for Recommendation. arXiv preprint arXiv:2508.08512.
 
