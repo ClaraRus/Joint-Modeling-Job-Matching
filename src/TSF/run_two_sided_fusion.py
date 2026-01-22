@@ -1,13 +1,9 @@
 import pandas as pd
 import os
 import argparse
-import numpy as np
-from src.utils import add_sensitive_columns, add_rank_column
 from fusion_methods import method_dict
 from fair_fusion import fair_fusion_optimisation
-from src.utils import process_data, add_intersectional_group_column
 from src.evaluation.run_compute_metrics import run_fairness_metrics, run_compatibility_score
-from src.configs import get_configs, read_args
 from src.TSF.utils import read_data, read_2sided_rec, merge_index_out_files, get_file_path
 
 def run_TSF_Fair(fusion_type, core, save_path, k, fair_metrics, group_cols, w_uf=None, data_index=None):
@@ -191,7 +187,7 @@ settings_choices = {
     "settings_DGI_country": settings_DGI_country,
     "settings_DUP_country": settings_DUP_country,
     "settings_DGI_is_payed": settings_DGI_is_payed,
-    "settings_DGI_country_is_payed": settings_DGI_country_is_payed,
+    "settings_DGI_country_is_payed": settings_DGI_country_is_payed
 }
 
 

@@ -150,10 +150,7 @@ custom_palette_bar_plot = {
 
 def get_eval_dirs(method, root_dir, fusion_type, core, k):
     dirs_all = os.listdir(root_dir)
-    
-    print("FUSION TYPE")
-    print(fusion_type)
-    
+
     # Match both "_k_10" and "K10" anywhere
     k_patterns = [f"_k_{k}", f"K{k}"]
 
@@ -164,11 +161,7 @@ def get_eval_dirs(method, root_dir, fusion_type, core, k):
             and method in dir_
             and any(kp in dir_ for kp in k_patterns)
         ]
-        print("Method")
-        print(method)
-        print(dirs_all)
-        print("DIRS AFTER FILTER")
-        print(dirs_)
+
         if method == "2sided":
             dirs_ = [dir_ for dir_ in dirs_ if "ATT" not in dir_]
     else:
@@ -180,8 +173,7 @@ def get_eval_dirs(method, root_dir, fusion_type, core, k):
             and fusion_type in dir_
             and any(kp in dir_ for kp in k_patterns)
         ]
-        print("DIRS AFTER FILTER")
-        print(dirs_)
+
 
         # ISR special case: remove log_ dirs
         if fusion_type == "isr":
@@ -280,8 +272,7 @@ def get_recsys_file(root_dir, dir_, fusion_type):
     
     if not os.path.exists(_recsys_file):
         _recsys_file = os.path.join(root_dir, dir_, "out-1.txt")
-        print(_recsys_file)
-        print("DOES NOT EXIST!")
+
     return _recsys_file
 
 def get_method_name(method, groups, fusion_type):
@@ -294,8 +285,6 @@ def get_method_name(method, groups, fusion_type):
     return method_name
 
 def read_metric(eval_dir, metric, group, per_group):
-
-    print(metric in dict_metrics_group_fairness)
     if metric in dict_metrics_group_fairness:
             if group == "__country__is_payed":
                 file_name = dict_metrics_group_fairness[metric]["proportional_population"] + "_per_group_items.csv"
@@ -317,12 +306,8 @@ def read_metric(eval_dir, metric, group, per_group):
                 else:
                     metric_value = data_eval
             else:
-                print("READ METRIC FILE PATH")
-                print(metric)
                 file_name = dict_metrics_group_fairness[metric]["proportional_population"] + ".csv"
                 metric_file_path = os.path.join(eval_dir, dict_metrics_group_fairness[metric]["proportional_data"], group , dict_metrics_group_fairness[metric]["measure"] + "__" + "proportional_" +  file_name)
-                print("METRIC FILE PATH")
-                print(metric_file_path) 
                 metric_value = pd.read_csv(metric_file_path)['0'].values[0]
 
     elif metric in dict_metrics_diversity:
@@ -422,27 +407,17 @@ def read_recommendation_file(method, root_dir, core, fusion_type=None, k=10):
 
 
     df_metric_values = pd.concat(metric_values)
-    print(df_metric_values)
     return df_metric_values
 
 
 def read_evaluation_file(method, root_dir, core, group, metric, per_group=False, per_UID=False, fusion_type=None, k=10):
     # dirs__recsys = get_recsys_dirs(method, "/".join(root_dir.split("/")[:-1]), fusion_type, core, k)
     dirs__eval = get_eval_dirs(method, root_dir, fusion_type, core, k)
-    print("DIRS EVAL")
-    print(dirs__eval)
     metric_values = []
     for dir_eval in dirs__eval:
         params = get_params(dir_eval, fusion_type)
         groups = get_groups(dir_eval)
-        
-        print("READ METRIC FILE")
-        print(metric)
-        print("PARAMS")
-        print(params)
-        print("GROUPS")
-        print(groups)
-        print(dir_eval)
+
         if metric in ['precision','recall','ndcg','coverage','gini']: 
             for user_group in ["All", "German", "NonGerman", "Premium", "NonPremium"]:
                 metric_value = read_utility_diversity_metrics(method, fusion_type, core, metric, k, user_group=user_group, item_group=groups, params=params)
@@ -463,11 +438,8 @@ def read_evaluation_file(method, root_dir, core, group, metric, per_group=False,
             metric_value = read_compatibility(eval_dir, metric)
         else:
             eval_dir = get_eval_dir(root_dir, dir_eval, fusion_type)
-            print("EVAL DIR")
-            print(eval_dir)
             metric_value = read_metric(eval_dir, metric, group, per_group)
-            print("METRIC VALUE")
-            print(metric_value)
+
 
         if metric not in ['precision','recall','ndcg','coverage','gini']: 
             method_name = get_method_name(method, groups, fusion_type)
@@ -525,8 +497,7 @@ def read_utility_diversity_metrics(method, fusion_type, core, metric, k, user_gr
             file_match = [file for file in file_match if "rankfusion" in file]
         else:
             file_match = [file for file in file_match if "fairfusion" in file]
-            print("FAIR FUSION FILE MATCH")
-            print(file_match)
+
     elif "ATT" in method:
         file_match = [file for file in file_match if "ATT" in file]
     else:
@@ -632,19 +603,10 @@ def read_eval_results_methods(root_dir, core, fairness_metrics, k):
                 try:
                     df = read_evaluation_file(method, root_dir, core, group, fairness_metric, k=k)
                 except FileNotFoundError:
-                    print("FILE NOT FOUND")
-                    print(method)
-                    print(group)
-                    print(fairness_metric)
                     continue
                 if df is None:
-                    print("No metrics for thie method!")
-                    print(method)
-                    print(fairness_metric)
-                    print(group)
                     continue
                 if df.empty:
-                    print("EMPTY DF")
                     continue
 
                 # column naming
@@ -668,25 +630,15 @@ def read_eval_results_methods(root_dir, core, fairness_metrics, k):
 
             # fusion types
             for fusion_type in fusion_types:
-                print("FUSION TYPE")
-                print(fusion_type)
                 try:
                     df = read_evaluation_file("2sided", root_dir_fusion, core, group, fairness_metric, fusion_type=fusion_type, k=k)
                 except FileNotFoundError:
-                    print("FILE NOT FOUND")
-                    print(method)
-                    print(group)
-                    print(fairness_metric)
                     continue
                 if df is None:
                     print("No metrics for thie method!")
-                    print(method)
-                    print(fairness_metric)
-                    print(group)
                     continue
 
                 if df.empty:
-                    print("EMPTY DF")
                     continue
 
                 if fairness_metric in utility_metrics:
@@ -1087,6 +1039,7 @@ def plot_metric_vs_alpha(root_dir, core, k=10, rank_fusion=False):
     results_2sided = results[
         results["method"].str.contains("2sided_weighted_sum")
     ]
+    results_2sided["α"] = results_2sided["params"]
 
     # -----------------------
     # Rank fusion variants
@@ -1208,10 +1161,6 @@ def plot_compatibility_diff_analysis(root_dir, core, k):
     results = pd.concat([results[mask_keep], results_fair_optim])
     results = format_naming(results, group_flag=None)
 
-    print("RESULTS TO PLOT")
-    print(results["method"].unique())
-    
-    
 
     # --- Define metrics to plot ---
     metrics = [
@@ -1527,10 +1476,7 @@ def plot_compatibility_diff_analysis_(root_dir, core, k):
     fig, ax = plt.subplots(figsize=(5, 6))
     plt.subplots_adjust(bottom=0.25)
 
-    print()
     attribute_order = ['Non-German', 'German', 'Non-premium', 'Premium']
-    print("ATTRIBUTE")
-    print(plot_df["attribute"].unique())
     # --- Plot added ---
     added_data = plot_df[plot_df["type"] == "added"]
     
@@ -1624,8 +1570,8 @@ root_dir = "/home/crus/XINGInteractions/DATA"
 #generate_results_file(root_dir, "20", k=10)
 
 
-#plot_metric_vs_alpha(root_dir, "20", k=10, rank_fusion=False)
 plot_metric_vs_alpha(root_dir, "20", k=10, rank_fusion=False)
+#plot_metric_vs_alpha(root_dir, "20", k=10, rank_fusion=False)
 # plot_compatibility_added_removed_items_analysis(root_dir, "20", k=10)
 # plot_compatibility_diff_analysis(root_dir, "20", k=20)
 

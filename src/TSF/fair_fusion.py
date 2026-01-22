@@ -76,7 +76,7 @@ def compound_metric(X, w_per_uid, fairness_metrics, group_cols, fairness_metric_
             metric_value = compute_fairness_metric(X_fused_top, index_group + 3, group_col, fairness_settings)
             
             if w_uf is not None:
-                if index == 0:
+                if index == 0 and index_group == 0:
                     metric_value = w_uf * metric_value
                 else:
                     metric_value = (1 - w_uf) * metric_value

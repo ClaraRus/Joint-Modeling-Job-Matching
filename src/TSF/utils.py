@@ -62,14 +62,17 @@ def get_file_path(path, core, fusion_type, k=10, w=None, fair_metrics=None, grou
         group_cols_str = "".join([f"_{g}" for g in group_cols])
 
    
-    if w is None:
-        if fusion_type == "fair_fusion_optim":
-                file_path = os.path.join(path, f"2sided_userjob_binary_core{core}_{suffix}_{fusion_type}_{fair_metrics_str}_{group_cols_str}_K{k}", "out.txt")
+    if fusion_type == "fair_fusion_optim":
+        if w is not None:
+            file_path = os.path.join(path, f"2sided_userjob_binary_core{core}_{suffix}_{fusion_type}_{fair_metrics_str}_{group_cols_str}_K{k}_w{w}", "out.txt")
+        else:
+            file_path = os.path.join(path, f"2sided_userjob_binary_core{core}_{suffix}_{fusion_type}_{fair_metrics_str}_{group_cols_str}_K{k}", "out.txt")
+    else:
+        if w is not None:
+            file_path = os.path.join(path, f"2sided_userjob_binary_core{core}_{suffix}_{fusion_type}_alpha{w}_K{k}", "out.txt")
         else:
             file_path = os.path.join(path, f"2sided_userjob_binary_core{core}_{suffix}_{fusion_type}_K{k}", "out.txt")
-    else:
-        file_path = os.path.join(path, f"2sided_userjob_binary_core{core}_{suffix}_{fusion_type}_alpha{w}_K{k}", "out.txt")
-
+    
     if index is not None:
         file_path = file_path.replace("out.txt", f"out-{index}.txt")
     
